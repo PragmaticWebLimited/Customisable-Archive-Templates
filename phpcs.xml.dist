@@ -26,7 +26,7 @@
 	<!-- Ensure textdomain consistency. -->
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="beano" />
+			<property name="text_domain" type="array" value="customisable-archive-templates" />
 		</properties>
 	</rule>
 
@@ -64,4 +64,5 @@
 
 	<!-- Build tool config/scripts. -->
 	<exclude-pattern>/.vscode/*</exclude-pattern>
+	<exclude-pattern>/vendor/*</exclude-pattern>
 </ruleset>

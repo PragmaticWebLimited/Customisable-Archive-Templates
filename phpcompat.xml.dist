@@ -20,4 +20,5 @@
 
 	<!-- Build tool config/scripts. -->
 	<exclude-pattern>/.vscode/*</exclude-pattern>
+	<exclude-pattern>/vendor/*</exclude-pattern>
 </ruleset>

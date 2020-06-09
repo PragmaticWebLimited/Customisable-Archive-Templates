@@ -53,7 +53,7 @@ jobs:
       - *configure_environment
       - run:
           name: "Install Project Dependencies"
-          command: cd the_plugin && composer install $DEFAULT_COMPOSER_FLAGS && npm install
+          command: cd the_plugin && composer install $DEFAULT_COMPOSER_FLAGS
       - persist_to_workspace:
           root: *workspace_root
           paths:
