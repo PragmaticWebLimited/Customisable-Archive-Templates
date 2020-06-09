@@ -1,6 +1,6 @@
 {
 	"name": "pragmaticweb/customisable-archive-templates",
-	"description": "Customisable Archive Templates for your WordPress.",
+	"description": "TODO SEO description",
 	"type": "project",
 	"config": {
 		"autoloader-suffix": "catplugin",
