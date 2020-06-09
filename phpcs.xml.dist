@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<ruleset name="Pragmatic PHP Standards">
+	<description>Apply modified Pragmatic PHP standards.</description>
+
+	<arg name="basepath" value="./" />
+	<arg name="extensions" value="php" />
+	<arg name="parallel" value="20" />
+	<arg value="ps" />
+
+	<ini name="memory_limit" value="256M" />
+
+	<!-- Use WordPress-VIP-Go as our base. -->
+	<rule ref="WordPress-VIP-Go">
+		<!-- We run this seperately in phpcompat.xml.dist. -->
+		<exclude name="PHPCompatibilityWP" />
+
+		<!-- This sniff throws a deprecated warning. -->
+		<exclude name="WordPress.WP.TimezoneChange" />
+		<rule ref="WordPress.DateTime.RestrictedFunctions" />
+	</rule>
+
+	<!--
+	Pragmatic customisations.
+	-->
+
+	<!-- Ensure textdomain consistency. -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array" value="beano" />
+		</properties>
+	</rule>
+
+	<!-- Disallow long array syntax. -->
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax" />
+
+	<!-- Single statement on same line. -->
+	<rule ref="Generic.Formatting.DisallowMultipleStatements" />
+
+	<!-- Namespacing required for classes. -->
+	<rule ref="PSR1.Classes.ClassDeclaration" />
+
+	<!-- Namespacing required for functions. -->
+	<rule ref="PSR2.Namespaces.NamespaceDeclaration" />
+
+	<!-- Namespacing of `use` statements. -->
+	<rule ref="PSR2.Namespaces.UseDeclaration">
+		<exclude name="PSR2.Namespaces.UseDeclaration.MultipleDeclarations" />
+	</rule>
+	<rule ref="PSR2R.Namespaces.UnusedUseStatement" />
+
+	<!-- Ban inline assignment in control structures. -->
+	<rule ref="PSR2R.ControlStructures.NoInlineAssignment" />
+
+	<!-- Make this sniff less sensitive to commented out code blocks. -->
+	<rule ref="Squiz.PHP.CommentedOutCode">
+		<properties>
+			<property name="maxPercentage" value="90" />
+		</properties>
+	</rule>
+
+	<!--
+	Exclusions.
+	-->
+
+	<!-- Build tool config/scripts. -->
+	<exclude-pattern>/.vscode/*</exclude-pattern>
+</ruleset>

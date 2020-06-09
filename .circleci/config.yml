@@ -1,0 +1,78 @@
+version: 2.1
+
+workflows:
+  build_test_deploy:
+    jobs:
+      - build
+
+      - test_phpcompat:
+          requires:
+            - build
+
+      - test_phpcs:
+          requires:
+            - build
+
+# This defines a reusable executor.
+executors:
+  php-docker:
+    docker:
+      - image: circleci/php:7.3-stretch-node-browsers
+
+references:
+  workspace_root: &workspace_root
+    /home/circleci/project
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+  # Default container configuration.
+  default_config: &default_config
+    environment:
+      - DEFAULT_COMPOSER_FLAGS: "--no-interaction --no-progress --no-suggest --prefer-dist"
+    executor: php-docker
+    working_directory: *workspace_root
+
+  # Environment set-up.
+  configure_environment: &configure_environment
+    run:
+      # xdebug is slow; hirak/prestissimo enables parallel Composer downloads.
+      name: "Configure System"
+      command: |
+        sudo rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+        echo 'memory_limit=4096M' | sudo tee -a /usr/local/etc/php/conf.d/circleci.ini
+        echo 'error_log=/home/circleci/php.log' | sudo tee -a /usr/local/etc/php/conf.d/circleci.ini
+        composer global require $DEFAULT_COMPOSER_FLAGS hirak/prestissimo
+
+jobs:
+  build:
+    <<: *default_config
+    steps:
+      - checkout:
+          path: the_plugin
+      - *configure_environment
+      - run:
+          name: "Install Project Dependencies"
+          command: cd the_plugin && composer install $DEFAULT_COMPOSER_FLAGS && npm install
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - the_plugin
+
+  test_phpcompat:
+    <<: *default_config
+    steps:
+      - *configure_environment
+      - *attach_workspace
+      - run:
+          name: "Run PHP Compatibility Checks"
+          command: cd the_plugin && composer run lint:phpcompat
+
+  test_phpcs:
+    <<: *default_config
+    steps:
+      - *configure_environment
+      - *attach_workspace
+      - run:
+          name: "Run PHP Code Sniffer Checks"
+          command: cd the_plugin && composer run lint:phpcs

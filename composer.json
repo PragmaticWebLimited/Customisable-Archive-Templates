@@ -1,0 +1,62 @@
+{
+	"name": "pragmaticweb/customisable-archive-templates",
+	"description": "Customisable Archive Templates for your WordPress.",
+	"type": "project",
+	"config": {
+		"autoloader-suffix": "catplugin",
+		"preferred-install": "dist",
+		"platform": {
+			"php": "7.3.5"
+		},
+		"process-timeout": 600,
+		"sort-packages": true
+	},
+	"authors": [
+		{
+			"email": "hello@pragmatic.agency",
+			"name": "Pragmatic"
+		},
+		{
+			"email": "paul@byotos.com",
+			"name": "Paul Gibbs"
+		}
+	],
+	"homepage": "https://pragmatic.agency/",
+	"repositories": [
+		{
+			"type": "git",
+			"url": "https://github.com/PragmaticWebLimited/Customisable-Archive-Templates"
+		}
+	],
+	"scripts": {
+		"post-install-cmd": [
+			"@setup"
+		],
+		"post-update-cmd": [
+			"@setup"
+		],
+		"setup": [
+			"@composer run-script --list"
+		],
+		"lint:phpcompat": [
+			"phpcs -ps --colors --report-width=80 --standard=phpcompat.xml.dist ."
+		],
+		"lint:phpcs": [
+			"phpcs -ps --colors --report-width=80 --standard=phpcs.xml.dist ."
+		]
+	},
+	"scripts-descriptions": {
+		"setup": "Sets up the development environment.",
+		"lint:phpcompat": "Checks PHP files for compatibility with PHP 7.3.",
+		"lint:phpcs": "Checks PHP files for compatibility with the WordPress-VIP-Go standards."
+	},
+	"require": {
+		"php": "~7.3"
+	},
+	"require-dev": {
+		"automattic/vipwpcs": "~2.0",
+		"dealerdirect/phpcodesniffer-composer-installer": "~0.6",
+		"phpcompatibility/phpcompatibility-wp": "~2.1",
+		"pyrech/composer-changelogs": "~1.7"
+	}
+}
