@@ -2,7 +2,7 @@
 
 __A project by [Pragmatic](https://pragmatic.agency).__
 
-> Customisable Archive Templates for your WordPress.
+> Customise the WordPress term archive template with the block editor.
 
 ---
 
