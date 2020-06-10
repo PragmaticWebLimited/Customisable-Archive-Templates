@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Customisable Archive Templates.
+ * Plugin Name: Customisable Archive Templates
  * Plugin URI: https://github.com/PragmaticWebLimited/Customisable-Archive-Templates
- * Description: Customisable Archive Templates for your WordPress.
+ * Description: TODO SEO description
  * Author: Pragmatic Web Limited
  * Author URI: https://pragmatic.agency
  * Version: 0.1.0
@@ -17,6 +17,7 @@ declare( strict_types = 1 );
 
 namespace Pragmatic\Customisable_Archive_Templates;
 
+require_once __DIR__ . '/inc/settings/functions.php';
 require_once __DIR__ . '/inc/functions.php';
 
 \add_action( 'plugins_loaded', __NAMESPACE__ . '\init_plugin' );

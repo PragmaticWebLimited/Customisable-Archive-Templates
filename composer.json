@@ -1,6 +1,6 @@
 {
 	"name": "pragmaticweb/customisable-archive-templates",
-	"description": "Customisable Archive Templates for your WordPress.",
+	"description": "TODO SEO description",
 	"type": "project",
 	"config": {
 		"autoloader-suffix": "catplugin",
@@ -51,11 +51,13 @@
 		"lint:phpcs": "Checks PHP files for compatibility with the WordPress-VIP-Go standards."
 	},
 	"require": {
-		"php": "~7.3"
+		"php": "~7.3",
+		"oomphinc/composer-installers-extender": "~1.1"
 	},
 	"require-dev": {
 		"automattic/vipwpcs": "~2.0",
 		"dealerdirect/phpcodesniffer-composer-installer": "~0.6",
+		"fig-r/psr2r-sniffer": "~0.6",
 		"phpcompatibility/phpcompatibility-wp": "~2.1",
 		"pyrech/composer-changelogs": "~1.7"
 	}
