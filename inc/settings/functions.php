@@ -29,14 +29,16 @@ function add_term_options() : void {
 function edit_term_fields( $tag, $tax_slug ) : void {
 	$taxonomy     = \get_taxonomy( $tax_slug );
 	$use_template = get_if_term_has_template_enabled( (int) $tag->term_id );
+	$template_id  = get_term_template_id( (int) $tag->term_id );
 
 	\wp_nonce_field( 'pragcat-' . $tax_slug, 'pragcat-nonce' );
 	?>
 
-	<h2><?php \esc_html_e( 'Archive Template', 'customisable-archive-templates' ); ?></h2>
+	<h2><?php \esc_html_e( 'Customisable Archive Template', 'customisable-archive-templates' ); ?></h2>
 
 	<table class="form-table pragcat-term-meta-fields">
 		<tbody>
+			<!-- "Use Template?" -->
 			<tr class="form-field">
 				<th scope="row"><?php \esc_html_e( 'Use Template', 'customisable-archive-templates' ); ?></th>
 				<td>
@@ -56,6 +58,19 @@ function edit_term_fields( $tag, $tax_slug ) : void {
 							?>
 						</label>
 					</fieldset>
+				</td>
+			</tr>
+
+			<!-- Template Post ID -->
+			<tr class="form-field">
+				<th scope="row">
+					<label for="pragcat_template_id">
+						<?php \esc_html_e( 'Template Post ID', 'customisable-archive-templates' ); ?>
+					</label>
+				</th>
+
+				<td>
+					<input name="pragcat[template-id]" type="number" id="pragcat_template_id" min="0" value="<?php echo \esc_attr( $template_id ); ?>">
 				</td>
 			</tr>
 		</tbody>
@@ -97,10 +112,18 @@ function save_term_fields( $term_id, $tt_id, $taxonomy ) : void {
 		return;
 	}
 
+	// "Use Template?".
 	if ( ! empty( $_POST['pragcat'] ) && ! empty( $_POST['pragcat']['use-template'] ) ) {
 		\update_term_meta( $term_id, 'pragcat-use-template', true );
 	} else {
 		\delete_term_meta( $term_id, 'pragcat-use-template' );
+	}
+
+	// Template Post ID.
+	if ( ! empty( $_POST['pragcat'] ) && ! empty( $_POST['pragcat']['template-id'] ) ) {
+		\update_term_meta( $term_id, 'pragcat-template-id', \absint( $_POST['pragcat']['template-id'] ) );
+	} else {
+		\delete_term_meta( $term_id, 'pragcat-template-id' );
 	}
 }
 
@@ -112,7 +135,22 @@ function save_term_fields( $term_id, $tt_id, $taxonomy ) : void {
  * @return boolean True if yes, false if no.
  */
 function get_if_term_has_template_enabled( int $term_id ) : bool {
-	return (bool) \get_term_meta( $term_id, 'pragcat-use-template', true );
+
+	$retval = (bool) \get_term_meta( $term_id, 'pragcat-use-template', true );
+	return \apply_filters( 'pragcat/get_if_term_has_template_enabled', $retval, $term_id );
+}
+
+/**
+ * Get the term's post template ID.
+ *
+ * @param string $term_id The term ID.
+ *
+ * @return int Post ID to use as a template.
+ */
+function get_term_template_id( int $term_id ) : int {
+
+	$retval = (int) \get_term_meta( $term_id, 'pragcat-template-id', true );
+	return \apply_filters( 'pragcat/get_term_template_id', $retval, $term_id );
 }
 
 /**
@@ -125,7 +163,7 @@ function get_if_term_has_template_enabled( int $term_id ) : bool {
 function get_supported_taxonomies() : array {
 
 	return \apply_filters(
-		'cat/get_supported_taxonomies',
+		'pragcat/get_supported_taxonomies',
 		\get_taxonomies( [ 'show_ui' => true, ] )
 	);
 }
