@@ -43,7 +43,7 @@ function maybe_render_template( string $default_template ) : string {
 		$term_slug = $GLOBALS['wp_query']->query_vars['category_name'];
 
 	} elseif ( \is_tag() ) {
-		$taxonomy  = 'tag';
+		$taxonomy  = 'post_tag';
 		$term_id   = $GLOBALS['wp_query']->query_vars['tag_id'];
 		$term_slug = $GLOBALS['wp_query']->query_vars['tag'];
 
