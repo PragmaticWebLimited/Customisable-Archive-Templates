@@ -58,7 +58,7 @@ function maybe_render_template( string $default_template ) : string {
 	}
 
 	$template_id  = Settings\get_term_template_id( $term_id );
-	if ( $template_id === 0 ) {
+	if ( $template_id === 0 || \get_post_status( $template_id ) !== 'publish' ) {
 		return $default_template;
 	}
 
