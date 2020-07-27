@@ -117,6 +117,7 @@ function save_term_fields( $term_id, $tt_id, $taxonomy ) : void {
 		\update_term_meta( $term_id, 'pragcat-use-template', true );
 	} else {
 		\delete_term_meta( $term_id, 'pragcat-use-template' );
+		\delete_term_meta( $term_id, 'pragcat-template-id' );
 	}
 
 	// Template Post ID.
