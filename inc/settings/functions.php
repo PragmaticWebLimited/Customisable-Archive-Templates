@@ -112,11 +112,24 @@ function save_term_fields( $term_id, $tt_id, $taxonomy ) : void {
 		return;
 	}
 
+	$old_post_id = get_term_template_id( $term_id );
+	$post_id     = \absint( $_POST['pragcat']['template-id'] );
+
 	// Template Post ID.
 	if ( ! empty( $_POST['pragcat'] ) && ! empty( $_POST['pragcat']['template-id'] ) ) {
-		\update_term_meta( $term_id, 'pragcat-template-id', \absint( $_POST['pragcat']['template-id'] ) );
+		\update_term_meta( $term_id, 'pragcat-template-id', $post_id );
+		\update_post_meta( $post_id, 'pragcat-term-id', $term_id );
+
+		if ( $old_post_id > 0 ) {
+			\delete_post_meta( $old_post_id, 'pragcat-term-id' );
+		}
+
 	} else {
 		\delete_term_meta( $term_id, 'pragcat-template-id' );
+
+		if ( $old_post_id > 0 ) {
+			\delete_post_meta( $old_post_id, 'pragcat-term-id' );
+		}
 	}
 
 	// "Use Template?".
@@ -125,6 +138,10 @@ function save_term_fields( $term_id, $tt_id, $taxonomy ) : void {
 	} else {
 		\delete_term_meta( $term_id, 'pragcat-use-template' );
 		\delete_term_meta( $term_id, 'pragcat-template-id' );
+
+		if ( $old_post_id > 0 ) {
+			\delete_post_meta( $old_post_id, 'pragcat-term-id' );
+		}
 	}
 }
 
