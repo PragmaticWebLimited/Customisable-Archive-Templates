@@ -112,18 +112,18 @@ function save_term_fields( $term_id, $tt_id, $taxonomy ) : void {
 		return;
 	}
 
+	// Template Post ID.
+	if ( ! empty( $_POST['pragcat'] ) && ! empty( $_POST['pragcat']['template-id'] ) ) {
+		\update_term_meta( $term_id, 'pragcat-template-id', \absint( $_POST['pragcat']['template-id'] ) );
+	} else {
+		\delete_term_meta( $term_id, 'pragcat-template-id' );
+	}
+
 	// "Use Template?".
 	if ( ! empty( $_POST['pragcat'] ) && ! empty( $_POST['pragcat']['use-template'] ) ) {
 		\update_term_meta( $term_id, 'pragcat-use-template', true );
 	} else {
 		\delete_term_meta( $term_id, 'pragcat-use-template' );
-		\delete_term_meta( $term_id, 'pragcat-template-id' );
-	}
-
-	// Template Post ID.
-	if ( ! empty( $_POST['pragcat'] ) && ! empty( $_POST['pragcat']['template-id'] ) ) {
-		\update_term_meta( $term_id, 'pragcat-template-id', \absint( $_POST['pragcat']['template-id'] ) );
-	} else {
 		\delete_term_meta( $term_id, 'pragcat-template-id' );
 	}
 }
