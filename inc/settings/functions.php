@@ -113,10 +113,10 @@ function save_term_fields( $term_id, $tt_id, $taxonomy ) : void {
 	}
 
 	$old_post_id = get_term_template_id( $term_id );
-	$post_id     = \absint( $_POST['pragcat']['template-id'] );
 
 	// Template Post ID.
 	if ( ! empty( $_POST['pragcat'] ) && ! empty( $_POST['pragcat']['template-id'] ) ) {
+		$post_id = \absint( $_POST['pragcat']['template-id'] );
 		\update_term_meta( $term_id, 'pragcat-template-id', $post_id );
 		\update_post_meta( $post_id, 'pragcat-term-id', $term_id );
 
