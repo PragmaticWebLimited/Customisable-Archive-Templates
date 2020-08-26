@@ -5,7 +5,7 @@
  * Description: Customise the WordPress term archive template with the block editor.
  * Author: Pragmatic Web Limited
  * Author URI: https://pragmatic.agency
- * Version: 0.6.0
+ * Version: 0.7.0
  * License: GPL-3.0-only
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: customisable-archive-templates

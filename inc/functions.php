@@ -74,6 +74,9 @@ function maybe_render_template( string $default_template ) : string {
 	$wp_query->post_count++;
 	array_unshift( $wp_query->posts, $wp_query->post );
 
+	// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- required to fix get_post_type() after the $wp_query change.
+	$GLOBALS['post'] = $wp_query->posts[0];
+
 	return \locate_template(
 		[
 			"pragcat-{$taxonomy}.php",
