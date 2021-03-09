@@ -33,6 +33,12 @@ function init_plugin() : void {
  */
 function maybe_render_template( string $default_template ) : string {
 
+	// Allow forcing the page to return a 404. Does not set status code. That will have to be done externally, way
+	// earlier.
+	if ( apply_filters( 'override_with_404_response', false ) ) {
+		return locate_template( '404.php' );
+	}
+
 	if ( ! \is_archive() && ! \is_tax() && ! \is_category() && ! \is_tag() ) {
 		return $default_template;
 	}
