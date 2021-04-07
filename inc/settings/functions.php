@@ -120,7 +120,7 @@ function save_term_fields( $term_id, $tt_id, $taxonomy ) : void {
 		\update_term_meta( $term_id, 'pragcat-template-id', $post_id );
 		\update_post_meta( $post_id, 'pragcat-term-id', $term_id );
 
-		if ( $old_post_id > 0 ) {
+		if ( $old_post_id > 0 && $old_post_id !== $post_id ) {
 			\delete_post_meta( $old_post_id, 'pragcat-term-id' );
 		}
 
