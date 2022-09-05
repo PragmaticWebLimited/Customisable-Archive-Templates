@@ -10,7 +10,13 @@
 			"php": "7.3.5"
 		},
 		"process-timeout": 600,
-		"sort-packages": true
+		"sort-packages": true,
+		"allow-plugins": {
+			"composer/installers": true,
+			"pyrech/composer-changelogs": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"oomphinc/composer-installers-extender": true
+		}
 	},
 	"authors": [
 		{
@@ -52,8 +58,8 @@
 		"lint:phpcs": "Checks PHP files for compatibility with the WordPress-VIP-Go standards."
 	},
 	"require": {
-		"php": "~7.3",
-		"oomphinc/composer-installers-extender": "~1.1"
+		"php": "~7.3 || ~8.0",
+		"oomphinc/composer-installers-extender": "~1.1 || ~2.0"
 	},
 	"require-dev": {
 		"automattic/vipwpcs": "~2.0",
